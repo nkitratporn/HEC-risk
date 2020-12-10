@@ -1,6 +1,7 @@
 #[ status: on-going]
 #[ note: ]
-#@ This code is for modeling species distribution in ensemble approach (multiple modeling methods)
+#@ This code is for calculating number of exposed population and area with varying level of vulnerability to different hazard level
+#@ The result is in csv format
 #=====================================#
 {
   #package management
