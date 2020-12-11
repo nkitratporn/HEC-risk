@@ -1,6 +1,10 @@
 #[ status: on-going]
 #[ note: ]
-#@ This code is for modeling species distribution in ensemble approach (multiple modeling methods)
+#@ This code is for preping and calculating risk components: hazard, exposure, and vulnerability
+#@ The calculation was perofrmed for baseline and all future scenarios
+#@ hazard has 5 scenarios: baseline, A1 (RCP45-SSP2-BZ), A2 (RCP85-SSP5-BZ), B1 (RCP45-SSP2-noBZ), B2 (RCP85-SSP5-noBZ)
+#@ exposure has 3 scenarios: baseline, 1, 2
+#@ vulnerability has 3 scenarios: baseline, 1, 2
 #=====================================#
 {
   #package management
@@ -379,7 +383,7 @@ index.class <- function(raster){
   writeRaster(exposure.index, bylayer=T, names(exposure.index), overwrite=T, format='GTiff','./data/raster/exposure/')
 }
 
-# calculate change
+# changes
 {
   exposure.diff <- exposure.index[[2:3]] - exposure.index$exposure_baseline
   names(exposure.diff) <- c('exposure_diff_RCP45_SSP2_2040','exposure_diff_RCP45_SSP5_2040')
@@ -448,6 +452,13 @@ index.class <- function(raster){
   vul.baseline <- stack(probdrought$drought_baseline,income.norm_minmax,workforce.secondaryEd_invs,access.internet_invs)
   vul.1 <- stack(probdrought$drought_RCP45_SSP2,income.norm_minmax,workforce.secondaryEd_invs,access.internet_invs)
   vul.2 <- stack(probdrought$drought_RCP85_SSP5,income.norm_minmax,workforce.secondaryEd_invs,access.internet_invs)
+}
+
+# multicollinearity
+{
+  pairs(vul.baseline)
+  pairs(vul.1)
+  pairs(vul.2)
 }
 
 # composite
