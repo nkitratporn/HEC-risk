@@ -282,7 +282,7 @@ index.class <- function(raster){
                         './output/raster/update/hazard_RCP45_SSP2_noBZ.tif',
                         './output/raster/update/hazard_RCP85_SSP5_noBZ.tif')
   
-  
+  # raw change
   hazard.diff <- hazard.index[[c(2:5)]] - hazard.index$hazard_baseline
   names(hazard.diff) <- c(
     'hazard_diff_RCP45_SSP2_BZ',
@@ -290,9 +290,14 @@ index.class <- function(raster){
     'hazard_diff_RCP45_SSP2_noBZ',
     'hazard_diff_RCP85_SSP5_noBZ'
   )
-  
-  # plot
-  levelplot(hazard.diff)
+  # % change
+  hazard.percdiff <- (hazard.index[[c(2:5)]] - hazard.index$hazard_baseline)/hazard.index$hazard_baselin
+  names(hazard.percdiff) <- c(
+    'hazard_perciff_RCP45_SSP2_BZ',
+    'hazard_percdiff_RCP85_SSP5_BZ',
+    'hazard_percdiff_RCP45_SSP2_noBZ',
+    'hazard_percdiff_RCP85_SSP5_noBZ'
+  )
   # save
   writeRaster(hazard.diff, bylayer=T, names(hazard.diff), format='GTiff', overwrite=T,'./output/raster/')
 }
@@ -385,11 +390,16 @@ index.class <- function(raster){
 
 # changes
 {
+  # raw change
   exposure.diff <- exposure.index[[2:3]] - exposure.index$exposure_baseline
   names(exposure.diff) <- c('exposure_diff_RCP45_SSP2_2040','exposure_diff_RCP45_SSP5_2040')
-  
+  # % change
+  exposure.percdiff <- (exposure.index[[2:3]] - exposure.index$exposure_baseline)/exposure.index$exposure_baseline
+  names(exposure.percdiff) <- c('exposure_percdiff_RCP45_SSP2_2040',
+                                'exposure_percdiff_RCP45_SSP5_2040')
   # save
   writeRaster(exposure.diff, bylayer=T, names(exposure.diff), overwrite=T, format='GTiff','./output/raster/')
+  writeRaster(exposure.percdiff, bylayer=T, names(exposure.percdiff), overwrite=T, format='GTiff','./output/raster/')
 }
 
 ## Classification
@@ -478,15 +488,18 @@ index.class <- function(raster){
 
 ## calculate changes
 {
+  # raw change
   vul.diff <- vul.index[[2:3]] - vul.index$vulnerability_baseline
   names(vul.diff) <- c('vulnerability_diff_RCP45_SSP2',
                        'vulnerability_diff_RCP85_SSP5')
+  # % change
+  vul.percdiff <- (vul.index[[2:3]] - vul.index$vulnerability_baseline)/vul.index$vulnerability_baseline
+  names(vul.percdiff) <- c('vulnerability_percdiff_RCP45_SSP2',
+                       'vulnerability_percdiff_RCP85_SSP5')
   
-  # plot
-  levelplot(vul.diff)
   # save
   writeRaster(vul.diff, bylayer=T, names(vul.diff),format='GTiff',overwrite=T,'./output/raster/')
-  
+  writeRaster(vul.percdiff, bylayer=T, names(vul.percdiff),format='GTiff',overwrite=T,'./output/raster/')
 }
 ## classification
 {
