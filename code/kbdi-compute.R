@@ -48,7 +48,7 @@ library(doParallel)
 
 #======KBDI CPP Calc========
 ## create function for kbdi calculation
-## solution 1 using C++ to speedup recursive function
+## using C++ to speedup recursive function
 ## if(kbdi > 800.0) { kbdi = 800.0; }
 cppFunction('NumericVector kbdiC(NumericVector x, NumericVector y, NumericVector z, NumericVector s){
 	
